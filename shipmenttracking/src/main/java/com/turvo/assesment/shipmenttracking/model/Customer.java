@@ -1,9 +1,13 @@
 package com.turvo.assesment.shipmenttracking.model;
 
-import java.util.List;
+import java.util.Collection;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -22,16 +26,20 @@ public class Customer {
 	private PreferenceType chanelPreference;
 
 	@Column
-	private ShipmentStatus subscribeList;
+	@ElementCollection(targetClass=ShipmentStatus.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name="subscribeList")
+	private Collection<ShipmentStatus> subscribeList;
 
 	@Column
 	private String email;
 
-	public ShipmentStatus getSubscribeList() {
+
+	public Collection<ShipmentStatus> getSubscribeList() {
 		return subscribeList;
 	}
 
-	public void setSubscribeList(ShipmentStatus subscribeList) {
+	public void setSubscribeList(Collection<ShipmentStatus> subscribeList) {
 		this.subscribeList = subscribeList;
 	}
 
