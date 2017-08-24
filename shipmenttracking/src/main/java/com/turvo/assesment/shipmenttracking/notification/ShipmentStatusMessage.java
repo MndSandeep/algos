@@ -2,7 +2,7 @@ package com.turvo.assesment.shipmenttracking.notification;
 
 import java.io.Serializable;
 
-import com.turvo.assesment.shipmenttracking.ShipmentStatus;
+import com.turvo.assesment.shipmenttracking.enums.ShipmentStatus;
 
 public class ShipmentStatusMessage implements Serializable {
 

@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.turvo.assesment.shipmenttracking.ShipmentStatus;
+import com.turvo.assesment.shipmenttracking.enums.ShipmentStatus;
 
 @Entity
 @Table

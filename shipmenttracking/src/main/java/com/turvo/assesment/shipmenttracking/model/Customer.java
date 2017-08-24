@@ -11,8 +11,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.turvo.assesment.shipmenttracking.PreferenceType;
-import com.turvo.assesment.shipmenttracking.ShipmentStatus;
+import com.turvo.assesment.shipmenttracking.enums.PreferenceType;
+import com.turvo.assesment.shipmenttracking.enums.ShipmentStatus;
 
 @Entity
 @Table
@@ -23,7 +23,11 @@ public class Customer {
 	private String name;
 
 	@Column
-	private PreferenceType chanelPreference;
+	@ElementCollection(targetClass=PreferenceType.class)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(name="chanelPreferenceList")
+	private Collection<PreferenceType> chanelPreferenceList;
+	
 
 	@Column
 	@ElementCollection(targetClass=ShipmentStatus.class)
@@ -62,12 +66,12 @@ public class Customer {
 		this.name = name;
 	}
 
-	public PreferenceType getChanelPreference() {
-		return chanelPreference;
+	public Collection<PreferenceType> getChanelPreferenceList() {
+		return chanelPreferenceList;
 	}
 
-	public void setChanelPreference(PreferenceType chanelPreference) {
-		this.chanelPreference = chanelPreference;
+	public void setChanelPreferenceList(Collection<PreferenceType> chanelPreferenceList) {
+		this.chanelPreferenceList = chanelPreferenceList;
 	}
 
 	public String getEmail() {
