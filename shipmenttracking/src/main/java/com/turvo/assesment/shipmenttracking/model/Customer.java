@@ -8,8 +8,12 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import com.turvo.assesment.shipmenttracking.enums.PreferenceType;
 import com.turvo.assesment.shipmenttracking.enums.ShipmentStatus;
@@ -23,16 +27,17 @@ public class Customer {
 	private String name;
 
 	@Column
-	@ElementCollection(targetClass=PreferenceType.class)
+	@ElementCollection(targetClass=PreferenceType.class,fetch=FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name="chanelPreferenceList")
 	private Collection<PreferenceType> chanelPreferenceList;
 	
 
 	@Column
-	@ElementCollection(targetClass=ShipmentStatus.class)
+	@ElementCollection(targetClass=ShipmentStatus.class,fetch=FetchType.LAZY)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name="subscribeList")
+	@Fetch(value = FetchMode.SUBSELECT)
 	private Collection<ShipmentStatus> subscribeList;
 
 	@Column
