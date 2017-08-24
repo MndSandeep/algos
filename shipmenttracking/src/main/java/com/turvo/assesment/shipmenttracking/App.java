@@ -24,4 +24,5 @@ public class App {
 				"java.lang, javax.security, java.util, org.apache.activemq, org.fusesource.hawtbuf, com.thoughtworks.xstream.mapper,com.turvo.assesment.shipmenttracking,com.turvo.assesment.shipmenttracking.notification");
 		SpringApplication.run(App.class, args);
 	}
+	
 }

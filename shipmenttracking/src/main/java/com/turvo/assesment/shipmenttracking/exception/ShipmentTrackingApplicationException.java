@@ -28,4 +28,8 @@ public class ShipmentTrackingApplicationException extends Exception {
 		super(cause);
 	}
 
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 }

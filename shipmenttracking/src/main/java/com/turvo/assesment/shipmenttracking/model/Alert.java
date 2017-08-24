@@ -2,35 +2,43 @@ package com.turvo.assesment.shipmenttracking.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table
 public class Alert {
 	@Id
-	private int id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long alertId;
 	
-	@Column
-	private int customerId;
+	@ManyToOne
+	@JoinColumn(name = "id")
+	private Customer customer;
 	
 	@Column
 	private String message;
 
-	public int getId() {
-		return id;
+
+
+	public Long getAlertId() {
+		return alertId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setAlertId(Long alertId) {
+		this.alertId = alertId;
 	}
 
-	public int getCustomerId() {
-		return customerId;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public String getMessage() {

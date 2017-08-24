@@ -11,8 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.turvo.assesment.shipmenttracking.exception.ShipmentTrackingApplicationException;
 import com.turvo.assesment.shipmenttracking.model.Shipment;
-import com.turvo.assesment.shipmenttracking.repository.ShipmentRepository;
 import com.turvo.assesment.shipmenttracking.service.ShipmentTrackingService;
+
+/**
+ * Controller class exposing the api's to create, update, track
+ * Shipment details.
+ *  
+ * @author Sandeep Allamsetti
+ */
 
 @RestController
 @RequestMapping("shipment")
@@ -21,6 +27,12 @@ public class ShipmentTrackingController {
 	@Autowired
 	ShipmentTrackingService shipmentTrackingService;
 
+	/**
+	 * Method to create Shipment entity
+	 * 
+	 * @param shipment the shipment input object
+	 * @return shipment the created response object of Shipment type
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public ResponseEntity<?> createShipment(@RequestBody Shipment shipment) {
 		try {
@@ -32,6 +44,13 @@ public class ShipmentTrackingController {
 		}
 
 	}
+	
+	/**
+	 * Method to update Shipment entity
+	 * 
+	 * @param shipment the shipment input object
+	 * @return shipment the updated response object of Shipment type
+	 */
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateShipment(@RequestBody Shipment shipment) {
@@ -45,6 +64,12 @@ public class ShipmentTrackingController {
 
 	}
 
+	/**
+	 * Method to return Shipment details including its status
+	 * 
+	 * @param shipmentId the id of the shipment 
+	 * @return shipment the response object of Shipment type
+	 */
 	@RequestMapping("/track")
 	public ResponseEntity<?> trackShipment(@RequestParam("shipmentId") String shipmentId) {
 

@@ -34,7 +34,7 @@ public class Customer {
 	
 
 	@Column
-	@ElementCollection(targetClass=ShipmentStatus.class,fetch=FetchType.LAZY)
+	@ElementCollection(targetClass=ShipmentStatus.class,fetch=FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name="subscribeList")
 	@Fetch(value = FetchMode.SUBSELECT)

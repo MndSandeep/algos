@@ -1,8 +1,5 @@
 package com.turvo.assesment.shipmenttracking.notification.listener;
 
-import java.util.Collection;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
@@ -17,6 +14,12 @@ import com.turvo.assesment.shipmenttracking.notification.ShipmentStatusMessage;
 import com.turvo.assesment.shipmenttracking.notification.factory.NotificationFactory;
 import com.turvo.assesment.shipmenttracking.service.CustomerService;
 
+/**
+ * Listener class which is responsible for shipment status notification 
+ * events and processing them to send respective message over the preferred channel.
+ * 
+ * @author Sandeep Allamsetti
+ */ 
 @Component
 public class ShipmentTrackingStatusListener {
 	
@@ -32,18 +35,18 @@ public class ShipmentTrackingStatusListener {
     public void receiveMessage(ShipmentStatusMessage shipment) {
 		try {
 			Customer customer = customerService.getCustomer(shipment.getCustomerId());
-			for(PreferenceType preference : customer.getChanelPreferenceList()) {
-			notificationSender = notificationFactory.getNotificationSender(preference);
-			Collection<ShipmentStatus> interestedEvents = customer.getSubscribeList();
-			Optional<ShipmentStatus> intrestFound = interestedEvents.stream().filter(e -> e.equals(shipment.getShipmentStatus())).findAny();
-			if(intrestFound.isPresent()) {
-				Message message = new Message();
-				message.setCustomerId(customer.getId());
-				message.setEmail(customer.getEmail());
-				message.setFrom("helpdesk@turvo.com");
-				message.setMessageText("Status of your shipment changed to :"+ shipment.getShipmentStatus());
-				notificationSender.sendNotification(message);
-			}
+			for (PreferenceType preference : customer.getChanelPreferenceList()) {
+				notificationSender = notificationFactory.getNotificationSender(preference);
+				for (ShipmentStatus subscribedEvent : customer.getSubscribeList()) {
+					if (subscribedEvent.equals(shipment.getShipmentStatus())) {
+						Message message = new Message();
+						message.setCustomerId(customer.getId());
+						message.setEmail(customer.getEmail());
+						message.setFrom("helpdesk@turvo.com");
+						message.setMessageText("Status of your shipment changed to :" + shipment.getShipmentStatus());
+						notificationSender.sendNotification(message);
+					}
+				}
 			}
 		} catch (ShipmentTrackingApplicationException e) {
 			e.printStackTrace();
